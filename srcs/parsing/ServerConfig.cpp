@@ -97,13 +97,25 @@ void	ServerConfig::tokenization(char *argv)
 					locationCount++;
 				}
 				i++;
-				if (i == 1 && this->m_limits.find(token) != this->m_limits.end())
+				if (i == 1 && this->m_limits.find(token) != this->m_limits.end()
+				&& token != "error_page" && token != "http_methods" && token != "cgi")
 				{
-					std::string tmp = token;
+					std::string tmp_key = token;
 					if (ss >> token)
 					{
-						token.find_last_of()
-						this->m_servers[serverCount][tmp] = token;
+						if (token.back() == ';')
+						{
+							token.pop_back();
+							this->m_servers[serverCount][tmp_key] = token;
+						}
+						else
+						{
+							std::string tmp_value = token;
+							if (ss >> token && token == ";")
+							{
+								this->m_servers[serverCount][tmp_key] = token;
+							}
+						}
 					}
 					else
 						errorTypeExt("Missing value", -2);
@@ -115,4 +127,5 @@ void	ServerConfig::tokenization(char *argv)
 		errorTypeExt("{", -2);
 		// Cas Erreur pour tout les cas de configs
 		// Function qui check tout ce qui est obligatoire
+	file.close();
 }
