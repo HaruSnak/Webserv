@@ -35,6 +35,11 @@ void	ServerConfigParser::parseDirectiveTwoValues(std::stringstream &ss, ServerCo
         errorTypeExt(directive + ": ';' missing at the end", -2);
     if (directive == "error_page")
 	{
+		for (size_t i = 0; i < value1.length(); i++)
+		{
+			if (!std::isdigit(value1[i]))
+				errorTypeExt("client_max_body_size: Only numbers possible (Min: 1024 <-> Max: 104857600)", -3);
+		}
         int code = std::stoi(value1.c_str());
         (server.*setter)(code, value2);
     }
@@ -55,13 +60,14 @@ void ServerConfigParser::parseDirectiveMultipleValues(std::stringstream &ss, Ser
 		{
             value.pop_back();
             foundSemicolon = true;
-            if (!value.empty())
+            if (!value.empty() && (value == "GET" || value == "POST" || value == "DELETE"))
                 (server.*adder)(value);
 			else
 				errorTypeExt(directive + ": Problem with this directive!", -1);
             break;
         }
-        (server.*adder)(value);
+		if (value == "GET" || value == "POST" || value == "DELETE")
+        	(server.*adder)(value);
     }
     if (!foundSemicolon)
         errorTypeExt(directive + ": ';' missing at the end", -2);

@@ -14,7 +14,7 @@ class $1
         $1();
         $1(const $1 &copy);
         ~$1();
-        $1& operator=($1& copy);
+        $1& operator=(const $1& copy);
 };
 
 #endif" > includes/$1.hpp
@@ -48,7 +48,7 @@ $1& $1::operator=($1& copy)
     {
 
     }
-    return (this);
+    return (*this);
 }
 
 //------------------------------- FUNCTIONS --------------------------------*/

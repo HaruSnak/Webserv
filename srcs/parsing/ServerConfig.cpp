@@ -58,6 +58,11 @@ ServerConfig& ServerConfig::operator=(const ServerConfig& copy)
 
 void	ServerConfig::addListen(const std::string &listen)
 {
+	for (size_t i = 0; i < listen.length(); i++)
+	{
+		if (!std::isdigit(listen[i]) || i != '.' || i != ':')
+			errorTypeExt("listen: Your IP address is not in the correct format. (Example: 111.111.111:8080)", -3);
+	}
 	this->m_listen = listen;
 	return ;
 }
@@ -80,9 +85,17 @@ void	ServerConfig::addIndex(const std::string &index)
 	return ;
 }
 
-void	ServerConfig::addClientSize(size_t client_size)
+void	ServerConfig::addClientSize(std::string client_size)
 {
-	this->m_client_max_size = client_size;
+	for (size_t i = 0; i < client_size.length(); i++)
+	{
+		if (!std::isdigit(client_size[i]))
+			errorTypeExt("client_max_body_size: Only numbers possible (Min: 1024 <-> Max: 104857600)", -3);
+	}
+	size_t tmp = std::stoul(client_size);
+	if (tmp < MIN_CLIENT_SIZE || tmp > MAX_CLIENT_SIZE)
+		errorTypeExt("client_max_body_size: Number limit = Min: 1024 <-> Max: 104857600", -3);
+	this->m_client_max_size = tmp;
 	return ;
 }
 
@@ -110,9 +123,14 @@ void	ServerConfig::addUpload(const std::string &upload)
 	return ;
 }
 
-void	ServerConfig::addAutoIndex(bool isAutoIndex)
+void	ServerConfig::addAutoIndex(std::string isAutoIndex)
 {
-	this->m_autoindex = isAutoIndex;
+	if (isAutoIndex == "on")
+		this->m_autoindex = true;
+	else if (isAutoIndex == "off")
+		this->m_autoindex = false;
+	else
+		errorTypeExt("autoindex: Invalid input (on or off)!", -4);
 	return ;
 }
 

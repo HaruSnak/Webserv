@@ -5,6 +5,10 @@
 # include <string>
 # include <map>
 # include <vector>
+# include "Webserv.hpp"
+
+//# define MAX_CLIENT_SIZE = 104857600;
+//# define MIN_CLIENT_SIZE = 1024;
 
 class ServerConfig
 {
@@ -19,6 +23,8 @@ class ServerConfig
 		std::map<std::string, std::string> m_cgi;
 		std::string m_upload;
 		bool m_autoindex;
+		const size_t MAX_CLIENT_SIZE = 104857600;
+		const size_t MIN_CLIENT_SIZE = 1024;
 		//std::map<std::string, bool> hasDirective;
 	public:
 		ServerConfig();
@@ -29,12 +35,12 @@ class ServerConfig
 		void	addServerName(const std::string &serverName);
 		void	addRoot(const std::string &root);
 		void	addIndex(const std::string &index);
-		void	addClientSize(size_t client_size);
+		void	addClientSize(std::string client_size);
 		void	addErrorsPages(size_t code, const std::string &url);
 		void	addHTTPMethods(const std::string &httpMethods);
 		void	addCgi(const std::string index, const std::string &url);
 		void	addUpload(const std::string &upload);
-		void	addAutoIndex(bool isAutoIndex);
+		void	addAutoIndex(std::string isAutoIndex);
 		std::string	getListen(void) const;
 		std::string	getServerName(void) const;
 		std::string getRoot(void) const;
