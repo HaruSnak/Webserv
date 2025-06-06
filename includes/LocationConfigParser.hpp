@@ -3,8 +3,10 @@
 
 # include <iostream>
 # include <string>
+# include "LocationConfig.hpp"
+# include "GenericConfigParser.hpp"
 
-class LocationConfigParser
+class LocationConfigParser : public GenericConfigParser<LocationConfig>
 {
 	private:
 
@@ -13,6 +15,7 @@ class LocationConfigParser
 		LocationConfigParser(const LocationConfigParser &copy);
 		~LocationConfigParser();
 		LocationConfigParser& operator=(const LocationConfigParser& copy);
+		void	parseLocationDirectives(std::stringstream &ss, LocationConfig &Location);
 };
 
 #endif

@@ -1,7 +1,8 @@
-#include "ServerConfigParser.hpp"
+#include "GenericConfigParser.hpp"
 
+template <typename ConfigType>
 template<typename SetterFunc>
-void	ServerConfigParser::parseAddDirectiveSimple(std::stringstream &ss, ServerConfig &server, SetterFunc setter, const std::string &directive)
+void	GenericConfigParser<ConfigType>::parseAddDirectiveSimple(std::stringstream &ss, ConfigType &config, SetterFunc setter, const std::string &directive)
 {
 	std::string value;
 	if (ss >> value)
@@ -13,18 +14,19 @@ void	ServerConfigParser::parseAddDirectiveSimple(std::stringstream &ss, ServerCo
 		if (directive == "client_max_body_size")
 		{
 			size_t tmp = std::stoul(value);
-			(server.*setter)(tmp);
+			(config.*setter)(tmp);
 		}
 		else
-			(server.*setter)(value);
+			(config.*setter)(value);
 	}
 	else
 		errorTypeExt(directive + ": Problem with this directive!", -1);
 }
 
+template <typename ConfigType>
 template<typename T1, typename T2>
-void	ServerConfigParser::parseDirectiveTwoValues(std::stringstream &ss, ServerConfig &server, 
-                    void (ServerConfig::*setter)(T1, T2), const std::string& directive)
+void	GenericConfigParser<ConfigType>::parseDirectiveTwoValues(std::stringstream &ss, ConfigType &config, 
+					void (ConfigType::*setter)(T1, T2), const std::string& directive)
 {
     std::string value1, value2;
     if (!(ss >> value1 >> value2))
@@ -41,15 +43,15 @@ void	ServerConfigParser::parseDirectiveTwoValues(std::stringstream &ss, ServerCo
 				errorTypeExt("client_max_body_size: Only numbers possible (Min: 1024 <-> Max: 104857600)", -3);
 		}
         int code = std::stoi(value1.c_str());
-        (server.*setter)(code, value2);
+        (config.*setter)(code, value2);
     }
 	else if (directive == "cgi")
-        (server.*setter)(value1, value2);
+        (config.*setter)(value1, value2);
 }
-
+template <typename ConfigType>
 template<typename Container>
-void ServerConfigParser::parseDirectiveMultipleValues(std::stringstream &ss, ServerConfig &server,
-                    void (ServerConfig::*adder)(const typename Container::value_type&), const std::string& directive)
+void GenericConfigParser<ConfigType>::parseDirectiveMultipleValues(std::stringstream &ss, ConfigType &config,
+					void (ConfigType::*adder)(const typename Container::value_type&), const std::string& directive)
 {
     std::string value;
     bool foundSemicolon = false;
@@ -61,13 +63,13 @@ void ServerConfigParser::parseDirectiveMultipleValues(std::stringstream &ss, Ser
             value.pop_back();
             foundSemicolon = true;
             if (!value.empty() && (value == "GET" || value == "POST" || value == "DELETE"))
-                (server.*adder)(value);
+                (config.*adder)(value);
 			else
 				errorTypeExt(directive + ": Problem with this directive!", -1);
             break;
         }
 		if (value == "GET" || value == "POST" || value == "DELETE")
-        	(server.*adder)(value);
+        	(config.*adder)(value);
     }
     if (!foundSemicolon)
         errorTypeExt(directive + ": ';' missing at the end", -2);
