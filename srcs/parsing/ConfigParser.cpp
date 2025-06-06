@@ -73,7 +73,10 @@ void	ConfigParser::parseServerBlock(std::ifstream &file)
 		std::string token;
 		ss >> token;
 		if (token == "}")
+		{
+			this->m_servers.push_back(newServer);
 			break;
+		}
 		else if (token == "location")
 		{
 			ss >> token;

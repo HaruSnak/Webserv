@@ -6,6 +6,7 @@
 # include <map>
 # include <vector>
 # include "Webserv.hpp"
+# include "LocationConfig.hpp"
 
 //# define MAX_CLIENT_SIZE = 104857600;
 //# define MIN_CLIENT_SIZE = 1024;
@@ -25,6 +26,7 @@ class ServerConfig
 		bool m_autoindex;
 		const size_t MAX_CLIENT_SIZE = 104857600;
 		const size_t MIN_CLIENT_SIZE = 1024;
+		std::vector<LocationConfig> m_locations;
 		//std::map<std::string, bool> hasDirective;
 	public:
 		ServerConfig();

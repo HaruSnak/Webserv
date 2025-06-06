@@ -11,7 +11,7 @@ class ConfigParser
 	private:
 		ServerConfigParser m_serverConfig;
 		LocationConfigParser m_locationConfig;
-		//class verif ?
+		std::vector<ServerConfig> m_servers;
 	public:
 		ConfigParser();
 		ConfigParser(const ConfigParser &copy);

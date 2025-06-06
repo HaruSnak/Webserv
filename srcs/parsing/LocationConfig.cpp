@@ -32,6 +32,17 @@ LocationConfig& LocationConfig::operator=(LocationConfig& copy)
 
 //------------------------------- FUNCTIONS --------------------------------*/
 
+//------------------------------- SETTERS --------------------------------*/
+
+void	LocationConfig::addPath(const std::string &path)
+{
+	if (!path.empty() && path[0] == '/')
+		this->m_root = path;
+	else
+		errorTypeExt("location: invalid path!", -4);
+	return ;
+}
+
 void	LocationConfig::addRoot(const std::string &root)
 {
 	this->m_root = root;
@@ -44,9 +55,14 @@ void	LocationConfig::addUpload(const std::string &upload)
 	return ;
 }
 
-void	LocationConfig::addAutoIndex(bool isAutoIndex)
+void	LocationConfig::addAutoIndex(const std::string &isAutoIndex)
 {
-	this->m_autoindex = isAutoIndex;
+	if (isAutoIndex == "on")
+		this->m_autoindex = true;
+	else if (isAutoIndex == "off")
+		this->m_autoindex = false;
+	else
+		errorTypeExt("autoindex: Invalid input (on or off)!", -4);
 	return ;
 }
 
@@ -60,6 +76,13 @@ void	LocationConfig::addCgi(const std::string index, const std::string &url)
 {
 	this->m_cgi[index] = url;
 	return ;
+}
+
+//------------------------------- GETTERS --------------------------------*/
+
+std::string LocationConfig::getPath(void) const
+{
+	return (this->m_path);
 }
 
 std::string LocationConfig::getRoot(void) const
