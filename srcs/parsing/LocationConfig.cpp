@@ -25,7 +25,12 @@ LocationConfig& LocationConfig::operator=(LocationConfig& copy)
 {
     if (this != &copy)
     {
-
+		this->m_path = copy.m_path;
+		this->m_root = copy.m_root;
+		this->m_upload = copy.m_upload;
+		this->m_autoindex = copy.m_autoindex;
+		this->m_httpMethods = copy.m_httpMethods;
+		this->m_cgi = copy.m_cgi;
     }
     return (*this);
 }

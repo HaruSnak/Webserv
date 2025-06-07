@@ -19,7 +19,7 @@ class ConfigParser
 		ConfigParser& operator=(const ConfigParser& copy);
 		void	parseConfigFile(char *argv);
 		void	parseServerBlock(std::ifstream &file);
-		//void	verifConfig(std::ifstream file);
+		void	parseLocationBlock(std::ifstream &file, ServerConfig &server);
 };
 
 #endif

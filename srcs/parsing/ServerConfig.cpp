@@ -134,6 +134,11 @@ void	ServerConfig::addAutoIndex(std::string isAutoIndex)
 	return ;
 }
 
+void	ServerConfig::addLocation(const LocationConfig &location)
+{
+	this->m_locations.push_back(location);
+}
+
 std::string	ServerConfig::getListen(void) const
 {
 	return (this->m_listen);

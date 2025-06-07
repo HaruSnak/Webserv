@@ -66,6 +66,7 @@ void	ConfigParser::parseConfigFile(char *argv)
 void	ConfigParser::parseServerBlock(std::ifstream &file)
 {
 	ServerConfig newServer;
+	//LocationConfig newLocation;
 	std::string buff;
 	while (std::getline(file, buff))
 	{
@@ -82,7 +83,7 @@ void	ConfigParser::parseServerBlock(std::ifstream &file)
 			ss >> token;
 			if (ss >> token && token == "{")
 			{
-
+				parseLocationBlock(file, newServer);
 			}
 			else
 				errorTypeExt("Syntaxe incomplet !", -1);

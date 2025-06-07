@@ -43,6 +43,7 @@ class ServerConfig
 		void	addCgi(const std::string index, const std::string &url);
 		void	addUpload(const std::string &upload);
 		void	addAutoIndex(std::string isAutoIndex);
+		void	addLocation(const LocationConfig &location);
 		std::string	getListen(void) const;
 		std::string	getServerName(void) const;
 		std::string getRoot(void) const;

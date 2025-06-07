@@ -13,8 +13,6 @@
 template <typename ConfigType>
 class GenericConfigParser
 {
-	private:
-
 	public:
 		template<typename SetterFunc>
 		void	parseAddDirectiveSimple(std::stringstream &ss, ConfigType &config, SetterFunc setter, const std::string &directive);
