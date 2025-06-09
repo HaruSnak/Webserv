@@ -41,14 +41,17 @@ void	LocationConfigParser::parseLocationDirectives(std::stringstream &ss, Locati
 	std::string directive;
 	ss.seekg(0);
 	ss >> directive;
+	std::cout << "2- ICI: " << directive << std::endl;
 	if (directive == "root")
 		parseAddDirectiveSimple(ss, location, &LocationConfig::addRoot, directive);
+	else if (directive == "index")
+		parseAddDirectiveSimple(ss, location, &LocationConfig::addIndex, directive);
 	else if (directive == "upload")
 		parseAddDirectiveSimple(ss, location, &LocationConfig::addUpload, directive);
 	else if (directive == "autoindex")
 		parseAddDirectiveSimple(ss, location, &LocationConfig::addAutoIndex, directive);
 	else if (directive == "http_methods")
-        parseDirectiveMultipleValues<std::vector<std::string>>(ss, location, &LocationConfig::addHTTPMethods, directive);
+        parseDirectiveMultipleValues<std::vector<std::string> >(ss, location, &LocationConfig::addHTTPMethods, directive);
 	else if (directive == "cgi")
         parseDirectiveTwoValues(ss, location, &LocationConfig::addCgi, directive);
 	else

@@ -12,6 +12,7 @@ class LocationConfig
     private:
 		std::string m_path;
 		std::string m_root;
+		std::string m_index;
 		std::string m_upload;
 		bool m_autoindex;
 		std::vector<std::string> m_httpMethods;
@@ -23,6 +24,7 @@ class LocationConfig
         LocationConfig& operator=(LocationConfig& copy);
 		void	addPath(const std::string &path);
 		void	addRoot(const std::string &root);
+		void	addIndex(const std::string &index);
 		void	addUpload(const std::string &upload);
 		void	addAutoIndex(const std::string &isAutoIndex);
 		void	addHTTPMethods(const std::string &httpMethods);
@@ -33,6 +35,9 @@ class LocationConfig
 		bool	getAutoIndex(void) const;
 		std::string	getHTTPMethods(size_t index) const;
 		std::string	getCGIHandler(const std::string &index) const;
+		//delete tests
+		const std::vector<std::string>& getHTTPMethods() const;
+    	const std::map<std::string, std::string>& getCGI() const;
 };
 
 #endif

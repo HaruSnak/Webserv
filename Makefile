@@ -6,6 +6,12 @@ CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
 OBJ_DIR = obj/
 
 SRC_1 = srcs/main.cpp \
+		srcs/errors/parsing/errors.cpp \
+		srcs/parsing/ConfigParser.cpp \
+		srcs/parsing/LocationConfig.cpp \
+		srcs/parsing/LocationConfigParser.cpp \
+		srcs/parsing/ServerConfig.cpp \
+		srcs/parsing/ServerConfigParser.cpp \
 
 OBJ_1 = $(patsubst %.cpp,$(OBJ_DIR)%.o,$(SRC_1))
 

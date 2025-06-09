@@ -8,9 +8,6 @@
 # include "Webserv.hpp"
 # include "LocationConfig.hpp"
 
-//# define MAX_CLIENT_SIZE = 104857600;
-//# define MIN_CLIENT_SIZE = 1024;
-
 class ServerConfig
 {
 	private:
@@ -24,10 +21,11 @@ class ServerConfig
 		std::map<std::string, std::string> m_cgi;
 		std::string m_upload;
 		bool m_autoindex;
-		const size_t MAX_CLIENT_SIZE = 104857600;
-		const size_t MIN_CLIENT_SIZE = 1024;
+		size_t m_max_client_size;
+		size_t m_min_client_size;
 		std::vector<LocationConfig> m_locations;
-		//std::map<std::string, bool> hasDirective;
+		std::map<std::string, bool> m_hasDirective;
+
 	public:
 		ServerConfig();
 		ServerConfig(const ServerConfig &copy);
@@ -38,9 +36,9 @@ class ServerConfig
 		void	addRoot(const std::string &root);
 		void	addIndex(const std::string &index);
 		void	addClientSize(std::string client_size);
-		void	addErrorsPages(size_t code, const std::string &url);
+		void	addErrorsPages(const std::string &code, const std::string &url);
 		void	addHTTPMethods(const std::string &httpMethods);
-		void	addCgi(const std::string index, const std::string &url);
+		void	addCGI(const std::string &index, const std::string &url);
 		void	addUpload(const std::string &upload);
 		void	addAutoIndex(std::string isAutoIndex);
 		void	addLocation(const LocationConfig &location);
@@ -54,6 +52,11 @@ class ServerConfig
 		std::string	getCGIHandler(const std::string &index) const;
 		std::string	getUpload(void) const;
 		bool	getAutoIndex(void) const;
+		// delete tests
+		const std::vector<std::string>& getHTTPMethods() const;
+		const std::map<size_t, std::string>& getErrorsPages() const;  // Attention au type !
+		const std::map<std::string, std::string>& getCgi() const;
+		const std::vector<LocationConfig>& getLocations() const;
 };
 
 #endif

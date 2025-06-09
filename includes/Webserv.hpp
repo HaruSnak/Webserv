@@ -4,6 +4,9 @@
 # include <string>
 # include <iostream>
 # include <sstream>
+# include <cstdlib>
+//# include "ConfigParser.hpp"
+
 
 namespace	color
 {
@@ -29,6 +32,6 @@ namespace	color
 }
 
 void	excluding_token(std::stringstream& ss, std::string token);
-void	errorTypeExt(std::string errorMsg, int n);
+void	errorTypeExt(const std::string &errorMsg, int code);
 
 #endif

@@ -3,8 +3,8 @@
 
 # include <iostream>
 # include <string>
-# include <ServerConfigParser.hpp>
-# include <LocationConfigParser.hpp>
+# include "ServerConfigParser.hpp"
+# include "LocationConfigParser.hpp"
 
 class ConfigParser
 {
@@ -18,8 +18,17 @@ class ConfigParser
 		~ConfigParser();
 		ConfigParser& operator=(const ConfigParser& copy);
 		void	parseConfigFile(char *argv);
-		void	parseServerBlock(std::ifstream &file);
-		void	parseLocationBlock(std::ifstream &file, ServerConfig &server);
+		void	parseServerBlock(const std::vector<std::string> &stack, size_t &c_index);
+		void	parseLocationBlock(const std::vector<std::string> &stack, ServerConfig &server, const std::string &path, size_t &c_index);
+		// delete function tests
+		void printAllServers() const;
+		void printServerDetails(size_t serverIndex) const;
+		void printLocationDetails(size_t serverIndex, size_t locationIndex) const;
+		bool validateParsing() const;
+		
+		// Getters pour les tests
+		const std::vector<ServerConfig>& getServers() const { return m_servers; }
+		size_t getServerCount() const { return m_servers.size(); }
 };
 
 #endif

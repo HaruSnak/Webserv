@@ -10,6 +10,13 @@ LocationConfig::LocationConfig()
 LocationConfig::LocationConfig(const LocationConfig &copy)
 {
     std::cout << "Name constructor called" << std::endl;
+	this->m_path = copy.m_path;
+	this->m_root = copy.m_root;
+	this->m_upload = copy.m_upload;
+	this->m_autoindex = copy.m_autoindex;
+	this->m_httpMethods = copy.m_httpMethods;
+	this->m_cgi = copy.m_cgi;
+	return ;
 }
 
 //------------------------------- DESTRUCTOR --------------------------------/
@@ -51,6 +58,12 @@ void	LocationConfig::addPath(const std::string &path)
 void	LocationConfig::addRoot(const std::string &root)
 {
 	this->m_root = root;
+	return ;
+}
+
+void	LocationConfig::addIndex(const std::string &index)
+{
+	this->m_index = index;
 	return ;
 }
 
@@ -114,4 +127,15 @@ std::string	LocationConfig::getCGIHandler(const std::string &index) const
 {
 	std::map<std::string, std::string>::const_iterator it = this->m_cgi.find(index);
 	return (it != this->m_cgi.end() ? it->second : "");
+}
+
+// delete tests
+const std::vector<std::string>& LocationConfig::getHTTPMethods() const
+{
+    return this->m_httpMethods;
+}
+
+const std::map<std::string, std::string>& LocationConfig::getCGI() const
+{
+    return this->m_cgi;
 }

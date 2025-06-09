@@ -41,6 +41,7 @@ void	ServerConfigParser::parseServerDirectives(std::stringstream &ss, ServerConf
 	std::string directive;
 	ss.seekg(0);
 	ss >> directive;
+	std::cout << "1- ICI: " << directive << std::endl;
 	if (directive == "listen")
 		parseAddDirectiveSimple(ss, server, &ServerConfig::addListen, directive);
 	else if (directive == "server_name")
@@ -58,9 +59,11 @@ void	ServerConfigParser::parseServerDirectives(std::stringstream &ss, ServerConf
 	else if (directive == "error_page")
 		parseDirectiveTwoValues(ss, server, &ServerConfig::addErrorsPages, directive);
 	else if (directive == "http_methods")
-        parseDirectiveMultipleValues<std::vector<std::string>>(ss, server, &ServerConfig::addHTTPMethods, directive);
+        parseDirectiveMultipleValues<std::vector<std::string> >(ss, server, &ServerConfig::addHTTPMethods, directive);
 	else if (directive == "cgi")
-        parseDirectiveTwoValues(ss, server, &ServerConfig::addCgi, directive);
+        parseDirectiveTwoValues(ss, server, &ServerConfig::addCGI, directive);
+	else if (directive.empty())
+		return ;
 	else
 		errorTypeExt("Unknown directive in configuration file!", -1);
 }

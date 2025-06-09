@@ -7,17 +7,11 @@ void	GenericConfigParser<ConfigType>::parseAddDirectiveSimple(std::stringstream 
 	std::string value;
 	if (ss >> value)
 	{
-		if (value.back() == ';')
-			value.pop_back();
+		if (!value.empty() && value[value.size() - 1] == ';')
+			value.resize(value.size() - 1);
 		else
 			errorTypeExt(directive + ": ';' missing at the end of a directive", -2);
-		if (directive == "client_max_body_size")
-		{
-			size_t tmp = std::stoul(value);
-			(config.*setter)(tmp);
-		}
-		else
-			(config.*setter)(value);
+		(config.*setter)(value);
 	}
 	else
 		errorTypeExt(directive + ": Problem with this directive!", -1);
@@ -31,8 +25,8 @@ void	GenericConfigParser<ConfigType>::parseDirectiveTwoValues(std::stringstream 
     std::string value1, value2;
     if (!(ss >> value1 >> value2))
         errorTypeExt(directive + ": Missing values!", -1);
-    if (value2.back() == ';')
-        value2.pop_back();
+    if (!value2.empty() && value2[value2.size() - 1] == ';')
+        value2.resize(value2.size() - 1);
 	else
         errorTypeExt(directive + ": ';' missing at the end", -2);
     if (directive == "error_page")
@@ -42,8 +36,7 @@ void	GenericConfigParser<ConfigType>::parseDirectiveTwoValues(std::stringstream 
 			if (!std::isdigit(value1[i]))
 				errorTypeExt("client_max_body_size: Only numbers possible (Min: 1024 <-> Max: 104857600)", -3);
 		}
-        int code = std::stoi(value1.c_str());
-        (config.*setter)(code, value2);
+        (config.*setter)(value1, value2);
     }
 	else if (directive == "cgi")
         (config.*setter)(value1, value2);
@@ -58,9 +51,9 @@ void GenericConfigParser<ConfigType>::parseDirectiveMultipleValues(std::stringst
     
     while (ss >> value)
 	{
-        if (value.back() == ';')
+        if (!value.empty() && value[value.size() - 1] == ';')
 		{
-            value.pop_back();
+            value.resize(value.size() - 1);
             foundSemicolon = true;
             if (!value.empty() && (value == "GET" || value == "POST" || value == "DELETE"))
                 (config.*adder)(value);

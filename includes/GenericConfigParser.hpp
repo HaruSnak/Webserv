@@ -8,6 +8,7 @@
 # include <map>
 # include <fstream>
 # include <cstring>
+# include <cstdlib>
 # include "Webserv.hpp"
 
 template <typename ConfigType>
