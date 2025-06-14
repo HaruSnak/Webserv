@@ -59,7 +59,10 @@ void	ServerConfigParser::parseServerDirectives(std::stringstream &ss, ServerConf
 	else if (directive == "error_page")
 		parseDirectiveTwoValues(ss, server, &ServerConfig::addErrorsPages, directive);
 	else if (directive == "http_methods")
-        parseDirectiveMultipleValues<std::vector<std::string> >(ss, server, &ServerConfig::addHTTPMethods, directive);
+		{
+			parseDirectiveMultipleValues<std::vector<std::string> >(ss, server, &ServerConfig::addHTTPMethods, directive);
+			server.initCheckDirective(directive, false);
+		}
 	else if (directive == "cgi")
         parseDirectiveTwoValues(ss, server, &ServerConfig::addCGI, directive);
 	else if (directive.empty())

@@ -56,7 +56,9 @@ void GenericConfigParser<ConfigType>::parseDirectiveMultipleValues(std::stringst
             value.resize(value.size() - 1);
             foundSemicolon = true;
             if (!value.empty() && (value == "GET" || value == "POST" || value == "DELETE"))
+			{
                 (config.*adder)(value);
+			}
 			else
 				errorTypeExt(directive + ": Problem with this directive!", -1);
             break;

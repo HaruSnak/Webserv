@@ -16,13 +16,13 @@ class ServerConfig
 		std::string m_root;
 		std::string m_index;
 		size_t m_client_max_size;
+		std::string m_upload;
+		bool m_autoindex;
+		size_t m_min_client_size;
+		size_t m_max_client_size;
 		std::map<size_t, std::string> m_errorsPages;
 		std::vector<std::string> m_httpMethods;
 		std::map<std::string, std::string> m_cgi;
-		std::string m_upload;
-		bool m_autoindex;
-		size_t m_max_client_size;
-		size_t m_min_client_size;
 		std::vector<LocationConfig> m_locations;
 		std::map<std::string, bool> m_hasDirective;
 
@@ -31,6 +31,11 @@ class ServerConfig
 		ServerConfig(const ServerConfig &copy);
 		~ServerConfig();
 		ServerConfig& operator=(const ServerConfig& copy);
+		void	initCheckDirective(const std::string &directive, bool multipleDirective);
+		void	checkNeedDirective(void);
+		void	validateIP(const std::string &listen);
+		void	validatePort(const std::string &listen);
+		// setters
 		void	addListen(const std::string &listen);
 		void	addServerName(const std::string &serverName);
 		void	addRoot(const std::string &root);
@@ -42,6 +47,7 @@ class ServerConfig
 		void	addUpload(const std::string &upload);
 		void	addAutoIndex(std::string isAutoIndex);
 		void	addLocation(const LocationConfig &location);
+		// getters
 		std::string	getListen(void) const;
 		std::string	getServerName(void) const;
 		std::string getRoot(void) const;

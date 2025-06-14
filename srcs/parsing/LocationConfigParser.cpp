@@ -51,7 +51,10 @@ void	LocationConfigParser::parseLocationDirectives(std::stringstream &ss, Locati
 	else if (directive == "autoindex")
 		parseAddDirectiveSimple(ss, location, &LocationConfig::addAutoIndex, directive);
 	else if (directive == "http_methods")
-        parseDirectiveMultipleValues<std::vector<std::string> >(ss, location, &LocationConfig::addHTTPMethods, directive);
+	{
+		parseDirectiveMultipleValues<std::vector<std::string> >(ss, location, &LocationConfig::addHTTPMethods, directive);
+		location.initCheckDirective(directive, false);
+	}
 	else if (directive == "cgi")
         parseDirectiveTwoValues(ss, location, &LocationConfig::addCgi, directive);
 	else

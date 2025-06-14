@@ -52,63 +52,64 @@ void	ConfigParser::parseConfigFile(char *argv)
 	file.close();
 	for (; c_index < stack.size(); c_index++)
 	{
-		std::cout << "BASE BUFF: " << stack[c_index] << std::endl;
 		std::stringstream ss(stack[c_index]);
 		ss >> token;
-		std::cout << "BASE: " << token << std::endl;
-		if (!token.empty())
+		if (token.empty())
 			continue ;
 		if (token == "server" && ss >> token && token == "{")
 		{
 			serverOn = true;
-			parseServerBlock(stack, c_index);
+			this->parseServerBlock(stack, c_index, serverOn);
 		}
 		else
 			errorTypeExt(" 1 - Unknown directive in configuration file!", -1);
-		std::cout << c_index << std::endl;
 	}
+	if (serverOn)
+		errorTypeExt("Closing the missing \"Location\" block", -1);
 }
 
-void	ConfigParser::parseServerBlock(const std::vector<std::string> &stack, size_t &c_index) // REWORK CODE ? BOOL CHECK SI UTILS
+void	ConfigParser::parseServerBlock(const std::vector<std::string> &stack, size_t &c_index, bool &serverOn)
 {
 	ServerConfig newServer;
-	//bool locationOn = false;
+	bool locationOn = false;
 	c_index++;
 	for (; c_index < stack.size(); c_index++)
 	{
 		std::stringstream ss(stack[c_index]);
 		std::string token;
 		ss >> token;
-		std::cout << " 2 - BASE: " << token << std::endl;
 		if (token == "}")
 		{
+			newServer.checkNeedDirective();
 			this->m_servers.push_back(newServer);
+			serverOn = false;
 			c_index++;
-			std::cout << "2 - BASE BUFF: " << stack[c_index] << std::endl;
 			return ;
 		}
 		else if (token == "location")
 		{
-			if (ss >> token)
+			if (ss >> token && token != "{")
 			{
 				std::string path = token;
 				if (ss >> token && token == "{")
 				{
-					//locationOn = true;
-					parseLocationBlock(stack, newServer, path, c_index);
+					locationOn = true;
+					this->parseLocationBlock(stack, newServer, path, c_index, locationOn);
 				}
 				else
-					errorTypeExt("Syntaxe incomplet !", -1);
+					errorTypeExt("Opening the missing \"Location\" block", -1);
 			}
 			else
-					errorTypeExt("Syntaxe incomplet !", -1);
+					errorTypeExt("Token (Directive) empty after Location !", -1);
 		}
 		else
-			m_serverConfig.parseServerDirectives(ss, newServer);
+			this->m_serverConfig.parseServerDirectives(ss, newServer);
 	}
+	if (locationOn)
+		errorTypeExt("Closing the missing \"Location\" block", -1);
 }
 
-void	ConfigParser::parseLocationBlock(const std::vector<std::string> &stack, ServerConfig &server, const std::string &path, size_t &c_index)
+void	ConfigParser::parseLocationBlock(const std::vector<std::string> &stack, ServerConfig &server, const std::string &path, size_t &c_index, bool &locationOn)
 {
 	LocationConfig newLocation;
 	newLocation.addPath(path);
@@ -120,14 +121,17 @@ void	ConfigParser::parseLocationBlock(const std::vector<std::string> &stack, Ser
 		ss >> token;
 		if (token == "}")
 		{
+			newLocation.checkNeedDirective();
 			server.addLocation(newLocation);
+			locationOn = false;
 			break;
 		}
 		else
-			m_locationConfig.parseLocationDirectives(ss, newLocation);
+			this->m_locationConfig.parseLocationDirectives(ss, newLocation);
 	}
 }
 
+// DELETE FUNCTIONS TEST
 /*------------------------------- TEST FUNCTIONS --------------------------------*/
 
 void ConfigParser::printAllServers() const

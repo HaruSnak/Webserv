@@ -17,11 +17,16 @@ class LocationConfig
 		bool m_autoindex;
 		std::vector<std::string> m_httpMethods;
 		std::map<std::string, std::string> m_cgi;
+		std::map<std::string, bool> m_hasDirective;
+
     public:
         LocationConfig();
         LocationConfig(const LocationConfig &copy);
         ~LocationConfig();
-        LocationConfig& operator=(LocationConfig& copy);
+        LocationConfig& operator=(const LocationConfig& copy);
+		void	initCheckDirective(const std::string &directive, bool multipleDirective);
+		void	checkNeedDirective(void);	
+		// setters
 		void	addPath(const std::string &path);
 		void	addRoot(const std::string &root);
 		void	addIndex(const std::string &index);
@@ -29,6 +34,7 @@ class LocationConfig
 		void	addAutoIndex(const std::string &isAutoIndex);
 		void	addHTTPMethods(const std::string &httpMethods);
 		void	addCgi(const std::string index, const std::string &url);
+		// getters
 		std::string getPath(void) const;
 		std::string getRoot(void) const;
 		std::string	getUpload(void) const;

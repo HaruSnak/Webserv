@@ -18,8 +18,8 @@ class ConfigParser
 		~ConfigParser();
 		ConfigParser& operator=(const ConfigParser& copy);
 		void	parseConfigFile(char *argv);
-		void	parseServerBlock(const std::vector<std::string> &stack, size_t &c_index);
-		void	parseLocationBlock(const std::vector<std::string> &stack, ServerConfig &server, const std::string &path, size_t &c_index);
+		void	parseServerBlock(const std::vector<std::string> &stack, size_t &c_index, bool &serverOn);
+		void	parseLocationBlock(const std::vector<std::string> &stack, ServerConfig &server, const std::string &path, size_t &c_index, bool &locationOn);
 		// delete function tests
 		void printAllServers() const;
 		void printServerDetails(size_t serverIndex) const;
