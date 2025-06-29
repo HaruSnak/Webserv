@@ -1,8 +1,12 @@
 #include "GenericConfigParser.hpp"
 
+//In this template class you will find functions that will handle the server side as well as Location while taking into account if the directive contains one or more "arguments".
+// Instead of making each function in each case, I preferred to make three function templates for the different cases
+
 template <typename ConfigType>
 template<typename SetterFunc>
-void	GenericConfigParser<ConfigType>::parseAddDirectiveSimple(std::stringstream &ss, ConfigType &config, SetterFunc setter, const std::string &directive)
+void	GenericConfigParser<ConfigType>::parseAddDirectiveSimple(std::stringstream &ss, ConfigType &config,
+					SetterFunc setter, const std::string &directive)
 {
 	std::string value;
 	if (ss >> value)
@@ -41,6 +45,7 @@ void	GenericConfigParser<ConfigType>::parseDirectiveTwoValues(std::stringstream 
 	else if (directive == "cgi")
         (config.*setter)(value1, value2);
 }
+
 template <typename ConfigType>
 template<typename Container>
 void GenericConfigParser<ConfigType>::parseDirectiveMultipleValues(std::stringstream &ss, ConfigType &config,

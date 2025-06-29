@@ -5,7 +5,7 @@
 # include <string>
 # include <vector>
 # include <map>
-# include "Webserv.hpp"
+# include "../utils.hpp"
 
 class LocationConfig
 {
@@ -25,7 +25,8 @@ class LocationConfig
         ~LocationConfig();
         LocationConfig& operator=(const LocationConfig& copy);
 		void	initCheckDirective(const std::string &directive, bool multipleDirective);
-		void	checkNeedDirective(void);	
+		void	checkNeedDirective(void);
+		bool	isMethodAllowed(const std::string &method);
 		// setters
 		void	addPath(const std::string &path);
 		void	addRoot(const std::string &root);
@@ -41,9 +42,6 @@ class LocationConfig
 		bool	getAutoIndex(void) const;
 		std::string	getHTTPMethods(size_t index) const;
 		std::string	getCGIHandler(const std::string &index) const;
-		//delete tests
-		const std::vector<std::string>& getHTTPMethods() const;
-    	const std::map<std::string, std::string>& getCGI() const;
 };
 
 #endif

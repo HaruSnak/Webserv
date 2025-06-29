@@ -9,7 +9,7 @@
 # include <fstream>
 # include <cstring>
 # include <cstdlib>
-# include "Webserv.hpp"
+# include "../utils.hpp"
 
 template <typename ConfigType>
 class GenericConfigParser

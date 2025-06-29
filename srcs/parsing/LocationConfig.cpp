@@ -1,4 +1,4 @@
-#include "../../includes/LocationConfig.hpp"
+#include "../../includes/parsing/LocationConfig.hpp"
 
 //------------------------------- CONSTRUCTOR --------------------------------/
 
@@ -58,6 +58,7 @@ LocationConfig& LocationConfig::operator=(const LocationConfig& copy)
 
 //------------------------------- FUNCTIONS --------------------------------*/
 
+// Function to initialize a std::map of my directives to confirm mandatory directives in a location
 void	LocationConfig::initCheckDirective(const std::string &directive, bool multipleDirective)
 {
 	if (!multipleDirective && this->m_hasDirective[directive])
@@ -72,6 +73,23 @@ void	LocationConfig::checkNeedDirective(void)
 {
 	if (!this->m_hasDirective["path"])
 		errorTypeExt("If the Location block is empty, it must have at least its path", -2);
+}
+
+// Checks in the m_httpMethods vector if the method argument exists (GET, POST, DELETE)
+bool	LocationConfig::isMethodAllowed(const std::string &method)
+{
+	try {
+		for (size_t i = 0; i < 3; i++)
+		{
+			if (this->getHTTPMethods(i) == method)
+				return (true);
+		}
+	}
+	catch (const std::out_of_range &e)
+	{
+		return (false);
+	}
+	return (false);
 }
 
 //------------------------------- SETTERS --------------------------------*/
@@ -156,23 +174,11 @@ bool	LocationConfig::getAutoIndex(void) const
 
 std::string	LocationConfig::getHTTPMethods(size_t index) const
 {
-	return (this->m_httpMethods[index]);
+	return (this->m_httpMethods.at(index));
 }
 
 std::string	LocationConfig::getCGIHandler(const std::string &index) const
 {
 	std::map<std::string, std::string>::const_iterator it = this->m_cgi.find(index);
 	return (it != this->m_cgi.end() ? it->second : "");
-}
-
-
-// delete tests
-const std::vector<std::string>& LocationConfig::getHTTPMethods() const
-{
-    return this->m_httpMethods;
-}
-
-const std::map<std::string, std::string>& LocationConfig::getCGI() const
-{
-    return this->m_cgi;
 }

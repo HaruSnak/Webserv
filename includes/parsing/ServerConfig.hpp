@@ -5,7 +5,7 @@
 # include <string>
 # include <map>
 # include <vector>
-# include "Webserv.hpp"
+# include "../utils.hpp"
 # include "LocationConfig.hpp"
 
 class ServerConfig
@@ -35,6 +35,7 @@ class ServerConfig
 		void	checkNeedDirective(void);
 		void	validateIP(const std::string &listen);
 		void	validatePort(const std::string &listen);
+		bool	isMethodAllowed(const std::string &method);
 		// setters
 		void	addListen(const std::string &listen);
 		void	addServerName(const std::string &serverName);
@@ -58,10 +59,6 @@ class ServerConfig
 		std::string	getCGIHandler(const std::string &index) const;
 		std::string	getUpload(void) const;
 		bool	getAutoIndex(void) const;
-		// delete tests
-		const std::vector<std::string>& getHTTPMethods() const;
-		const std::map<size_t, std::string>& getErrorsPages() const;  // Attention au type !
-		const std::map<std::string, std::string>& getCgi() const;
 		const std::vector<LocationConfig>& getLocations() const;
 };
 

@@ -1,12 +1,11 @@
-#ifndef WEBSERV_HPP
-# define WEBSERV_HPP
+#ifndef UTILS_HPP
+# define UTILS_HPP
 
 # include <string>
 # include <iostream>
 # include <sstream>
 # include <cstdlib>
 //# include "ConfigParser.hpp"
-
 
 namespace	color
 {

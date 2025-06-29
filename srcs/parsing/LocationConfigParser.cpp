@@ -1,4 +1,4 @@
-#include "../../includes/LocationConfigParser.hpp"
+#include "../../includes/parsing/LocationConfigParser.hpp"
 
 /*------------------------------- CONSTRUCTOR --------------------------------*/
 
@@ -36,12 +36,12 @@ LocationConfigParser& LocationConfigParser::operator=(const LocationConfigParser
 
 /*------------------------------- FUNCTIONS --------------------------------*/
 
+// Depending on the directive, the function initializes by calling the famous template functions for more simplicity in the process
 void	LocationConfigParser::parseLocationDirectives(std::stringstream &ss, LocationConfig &location)
 {
 	std::string directive;
 	ss.seekg(0);
 	ss >> directive;
-	std::cout << "2- ICI: " << directive << std::endl;
 	if (directive == "root")
 		parseAddDirectiveSimple(ss, location, &LocationConfig::addRoot, directive);
 	else if (directive == "index")
@@ -60,4 +60,3 @@ void	LocationConfigParser::parseLocationDirectives(std::stringstream &ss, Locati
 	else
 		errorTypeExt("Unknown directive in configuration file!", -1);
 }
-

@@ -1,4 +1,4 @@
-#include "../../includes/ServerConfigParser.hpp"
+#include "../../includes/parsing/ServerConfigParser.hpp"
 
 /*------------------------------- CONSTRUCTOR --------------------------------*/
 
@@ -36,6 +36,7 @@ ServerConfigParser& ServerConfigParser::operator=(const ServerConfigParser& copy
 
 /*------------------------------- FUNCTIONS --------------------------------*/
 
+// Depending on the directive, the function initializes by calling the famous template functions for more simplicity in the process
 void	ServerConfigParser::parseServerDirectives(std::stringstream &ss, ServerConfig &server)
 {
 	std::string directive;

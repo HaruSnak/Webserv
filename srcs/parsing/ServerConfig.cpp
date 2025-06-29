@@ -1,4 +1,4 @@
-#include "../../includes/ServerConfig.hpp"
+#include "../../includes/parsing/ServerConfig.hpp"
 
 /*------------------------------- CONSTRUCTOR --------------------------------*/
 
@@ -75,6 +75,7 @@ ServerConfig& ServerConfig::operator=(const ServerConfig& copy)
 
 /*------------------------------- FUNCTIONS --------------------------------*/
 
+// Function to initialize a std::map of my directives to confirm mandatory directives in a location
 void	ServerConfig::initCheckDirective(const std::string &directive, bool multipleDirective)
 {
 	if (!multipleDirective && this->m_hasDirective[directive])
@@ -91,6 +92,7 @@ void	ServerConfig::checkNeedDirective(void)
 		errorTypeExt("At a minimum, the \"listen\" and \"root\" directives are required in the server block!", -2);
 }
 
+// ValidateIP and ValidatePort, checks that byte blocks do not exceed limits
 void	ServerConfig::validateIP(const std::string &listen)
 {
 	if (listen[0] == '0' && listen.size() > 1)
@@ -111,9 +113,26 @@ void	ServerConfig::validatePort(const std::string &listen)
 	return ;
 }
 
+// Checks in the m_httpMethods vector if the method argument exists (GET, POST, DELETE)
+bool	ServerConfig::isMethodAllowed(const std::string &method)
+{
+	try {
+		for (size_t i = 0; i < 3; i++)
+		{
+			if (this->getHTTPMethods(i) == method)
+				return (true);
+		}
+	}
+	catch (const std::out_of_range &e)
+	{
+		return (false);
+	}
+	return (false);
+}
+
 //------------------------------- SETTERS --------------------------------*/
 
-
+// Verification of the IP address typing before initialization.
 void	ServerConfig::addListen(const std::string &listen)
 {
 	std::string listen_tmp = listen;
@@ -271,7 +290,7 @@ std::map<size_t, std::string>::const_iterator ServerConfig::getErrorsPages(size_
 
 std::string	ServerConfig::getHTTPMethods(size_t index) const
 {
-	return (this->m_httpMethods[index]);
+	return (this->m_httpMethods.at(index));
 }
 
 std::string	ServerConfig::getCGIHandler(const std::string &index) const
@@ -288,22 +307,6 @@ std::string	ServerConfig::getUpload(void) const
 bool	ServerConfig::getAutoIndex(void) const
 {
 	return (this->m_autoindex);
-}
-
-// delete tests
-const std::vector<std::string>& ServerConfig::getHTTPMethods() const
-{
-    return this->m_httpMethods;
-}
-
-const std::map<size_t, std::string>& ServerConfig::getErrorsPages() const
-{
-    return this->m_errorsPages;
-}
-
-const std::map<std::string, std::string>& ServerConfig::getCgi() const
-{
-    return this->m_cgi;
 }
 
 const std::vector<LocationConfig>& ServerConfig::getLocations() const
