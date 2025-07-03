@@ -12,12 +12,16 @@ SRC_1 = srcs/main.cpp \
 		srcs/parsing/LocationConfigParser.cpp \
 		srcs/parsing/ServerConfig.cpp \
 		srcs/parsing/ServerConfigParser.cpp \
+		srcs/HTTP-Core/HttpParser.cpp \
+		srcs/HTTP-Core/HttpResponse.cpp \
+		srcs/HTTP-Core/RequestHandler.cpp \
+		srcs/HTTP-Core/WebServ.cpp \
 
 OBJ_1 = $(patsubst %.cpp,$(OBJ_DIR)%.o,$(SRC_1))
 
 $(OBJ_DIR)%.o: %.cpp
 	@mkdir -p $(@D)
-	@$(CXX) $(CXXFLAGS) -c $< -o $@
+	@$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
 .cpp.o:
 	@$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@

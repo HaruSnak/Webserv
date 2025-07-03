@@ -15,7 +15,7 @@ class WebServ
 	private:
 		std::vector<ServerConfig> m_servers;
 		std::vector<int> m_sockets;
-		std::map<int, std::vector<ServerConfig*>> m_socketToServer;
+		std::map<int, std::vector<ServerConfig*> > m_socketToServer;
 		void	setupSocket(void);
 		ServerConfig* resolveServer(const std::string &host, int socket);
 		LocationConfig* resolveLocation(const std::string &uri, ServerConfig server);

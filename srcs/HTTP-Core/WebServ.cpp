@@ -120,7 +120,7 @@ LocationConfig* WebServ::resolveLocation(const std::string &uri, ServerConfig se
 	}
 	if (occurence > 0)
 		return (&locationsServers[k]);
-	return (nullptr);
+	return (NULL);
 }
 
 std::string WebServ::buildPath(const std::string &uri, LocationConfig *location, ServerConfig *server)
@@ -129,6 +129,7 @@ std::string WebServ::buildPath(const std::string &uri, LocationConfig *location,
 		return (server->getRoot() + uri);
 	else if (!location->getRoot().empty())
 		return (location->getRoot() + uri);
+	return (server->getRoot() + uri);
 }
 
 /*------------------------------- GETTERS --------------------------------*/
@@ -149,6 +150,7 @@ std::string WebServ::getMime(const std::string &uri)
 				case 'n': return ("image/png");
 				case 'd': return ("application/pdf");
 			}
+			break;
 		case 'j': 
 			switch(tmp[1]) {
 				case 'p': return ("image/jpeg");
@@ -158,6 +160,7 @@ std::string WebServ::getMime(const std::string &uri)
 						case '\0': return ("application/javascript");
 				}
 			}
+			break;
 		case 'g': return ("image/gif");
 		case 's': return ("image/svg+xml");
 		case 'b': return ("image/bmp");
@@ -168,10 +171,12 @@ std::string WebServ::getMime(const std::string &uri)
 				case 'i': return ("image/tiff");
 				case 'x': return ("text/txt");
 			}
+			break;
 		case 'h': return ("text/html");
 		case 'c': return ("text/css");
 		default: return ("application/octet-stream");
 	}
+	return ("application/octet-stream");
 }
 
 int	WebServ::getStatusError(const std::string &uri, const std::string &method, LocationConfig *location, ServerConfig *server)
