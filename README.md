@@ -38,6 +38,8 @@ As for me, I focused on parsing the configuration file, as well as setting up th
 
 The rest of the project was split between pair programming especially the core structure of Webserv and individual tasks, such as test tools and certain specific features.
 
+---
+
 ## Implemented Features
 
 ### 1. **HTTP Core Server**
@@ -82,6 +84,8 @@ The rest of the project was split between pair programming especially the core s
 - **Limitation** : Maximum body size
 - **Routes** : Path configuration
 - **Errors** : Custom error pages
+
+---
 
 ## Configuration File Format
 
@@ -165,6 +169,8 @@ server {
     }
 }
 ```
+
+---
 
 ## Implemented HTTP Status Codes
 
@@ -361,13 +367,13 @@ Below you will find the links used for this project:
 - [HTTP request methods](https://developer.mozilla.org/fr/docs/Web/HTTP/Reference/Methods)
 - [IBM - Nonblocking I/O and select()](https://www.ibm.com/docs/en/i/7.2.0?topic=designs-example-nonblocking-io-select)
 
-[contributors-shield]: https://img.shields.io/github/contributors/HaruSnak/CPP-Module-ALL.svg?style=for-the-badge
-[contributors-url]: https://github.com/HaruSnak/CPP-Module-ALL/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/HaruSnak/CPP-Module-ALL.svg?style=for-the-badge
-[forks-url]: https://github.com/HaruSnak/CPP-Module-ALL/network/members
-[stars-shield]: https://img.shields.io/github/stars/HaruSnak/CPP-Module-ALL.svg?style=for-the-badge
-[stars-url]: https://github.com/HaruSnak/CPP-Module-ALL/stargazers
-[issues-shield]: https://img.shields.io/github/issues/HaruSnak/CPP-Module-ALL.svg?style=for-the-badge
-[issues-url]: https://github.com/HaruSnak/CPP-Module-ALL/issues
+[contributors-shield]: https://img.shields.io/github/contributors/HaruSnak/Webserv.svg?style=for-the-badge
+[contributors-url]: https://github.com/HaruSnak/Webserv/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/HaruSnak/Webserv.svg?style=for-the-badge
+[forks-url]: https://github.com/HaruSnak/Webserv/network/members
+[stars-shield]: https://img.shields.io/github/stars/HaruSnak/Webserv.svg?style=for-the-badge
+[stars-url]: https://github.com/HaruSnak/Webserv/stargazers
+[issues-shield]: https://img.shields.io/github/issues/HaruSnak/Webserv.svg?style=for-the-badge
+[issues-url]: https://github.com/HaruSnak/Webserv/issues
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/shany-moreno-5a863b2aa
