@@ -31,9 +31,9 @@ So here we are at the first group project with the CPP. WebServ is an *HTTP/1.1*
 
 ## About
 
-I worked on this project with my teammate, **Astoll**, shortly after completing the *C++ modules at 42 (CPP98)*. For people who had just been introduced to *object-oriented programming*, Webserv was a real challenge but despite our initial doubts, it turned out to be a rather enjoyable project.
+I worked on this project with my teammate, [Astoll](https://github.com/42andy), shortly after completing the *C++ modules at 42 (CPP98)*. For people who had just been introduced to *object-oriented programming*, Webserv was a real challenge but despite our initial doubts, it turned out to be a rather enjoyable project.
 
-**Astoll** mainly handled the parsing of **HTTP requests** and the generation of responses.
+[Astoll](https://github.com/42andy) mainly handled the parsing of **HTTP requests** and the generation of responses.
 As for me, I focused on parsing the configuration file, as well as setting up the initial structure for processing **HTTP requests**.
 
 The rest of the project was split between pair programming especially the core structure of Webserv and individual tasks, such as test tools and certain specific features.
